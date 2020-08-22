@@ -32,8 +32,19 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "com.google.android.material:material:$android_material_version"
 
+    // NETWORK
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_gson_adapter_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    // RX
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+
     // UNIT TESTING
     testImplementation "junit:junit:$junit_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
     // INSTRUMENTATION TESTING
@@ -41,6 +52,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_contrib_version"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_intents_version"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
     androidTestImplementation "android.arch.core:core-testing:$core_testing_version"
     implementation "androidx.core:core-ktx:$core_ktx_version"
 }

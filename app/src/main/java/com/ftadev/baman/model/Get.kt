@@ -7,7 +7,7 @@ data class SampleList(
 
 data class Data(
     val id: String,
-    val list: List<Item>,
+    val list: ArrayList<Item>,
     val title: String
 )
 

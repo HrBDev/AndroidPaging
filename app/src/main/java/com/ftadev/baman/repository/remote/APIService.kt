@@ -1,4 +1,4 @@
-package com.ftadev.baman.api
+package com.ftadev.baman.repository.remote
 
 import com.ftadev.baman.model.Page
 import com.ftadev.baman.model.SampleItem

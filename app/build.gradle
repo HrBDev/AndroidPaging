@@ -3,6 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('../../baman.jks')
+        }
+        release {
+            storeFile file('../../baman.jks')
+            storePassword ''
+            keyAlias ''
+            keyPassword ''
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
@@ -20,6 +31,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 

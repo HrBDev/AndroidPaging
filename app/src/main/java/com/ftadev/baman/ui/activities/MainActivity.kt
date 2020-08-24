@@ -32,6 +32,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupRecyclerView()
+
+        loadFirstPage()
+    }
+
+    private fun setupRecyclerView() {
         adapter = PaginationAdapter()
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -51,8 +57,6 @@ class MainActivity : AppCompatActivity() {
             override val isLastPage: Boolean = isLastPageVar
             override val isLoading: Boolean = isLoadingVar
         })
-
-        loadFirstPage()
     }
 
     @SuppressLint("CheckResult")

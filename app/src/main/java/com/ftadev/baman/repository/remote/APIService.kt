@@ -1,8 +1,8 @@
 package com.ftadev.baman.repository.remote
 
-import com.ftadev.baman.model.Page
-import com.ftadev.baman.model.SampleItem
-import com.ftadev.baman.model.SampleList
+import com.ftadev.baman.repository.model.Page
+import com.ftadev.baman.repository.model.SampleItem
+import com.ftadev.baman.repository.model.SampleList
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

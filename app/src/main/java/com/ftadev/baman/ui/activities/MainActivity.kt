@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ftadev.baman.R
-import com.ftadev.baman.model.Page
+import com.ftadev.baman.repository.model.Page
 import com.ftadev.baman.repository.remote.APIService
 import com.ftadev.baman.ui.PaginationScrollListener
 import com.ftadev.baman.ui.adapter.PaginationAdapter

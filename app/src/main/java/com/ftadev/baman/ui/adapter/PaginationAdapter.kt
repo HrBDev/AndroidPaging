@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ftadev.baman.R
-import com.ftadev.baman.model.Item
+import com.ftadev.baman.repository.model.Item
 
 class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM = 0

@@ -1,4 +1,4 @@
-package com.ftadev.baman.model
+package com.ftadev.baman.repository.model
 
 data class SampleList(
     val code: Int,

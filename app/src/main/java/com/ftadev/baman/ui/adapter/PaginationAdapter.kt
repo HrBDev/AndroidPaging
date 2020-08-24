@@ -16,6 +16,7 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val LOADING = 1
 
     private var mList = ArrayList<Item>()
+    private var isLoading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         lateinit var viewHolder: RecyclerView.ViewHolder
@@ -73,7 +74,15 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount() = mList.size
 
-    override fun getItemViewType(position: Int): Int = if (position == mList.size - 1) LOADING else ITEM
+    override fun getItemViewType(position: Int): Int = if (position == mList.size - 1 && isLoading) LOADING else ITEM
+
+    fun addLoading() {
+        isLoading = true
+    }
+
+    fun removeLoading() {
+        isLoading = false
+    }
 
     fun addAll(items: ArrayList<Item>) {
         mList.addAll(items)

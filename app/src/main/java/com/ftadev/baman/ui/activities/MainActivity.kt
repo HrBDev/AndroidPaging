@@ -69,7 +69,10 @@ class MainActivity : AppCompatActivity() {
             .subscribe({ result ->
                 progress.visibility = View.GONE
                 adapter.addAll(result.data.list)
-                if (currentPage > TOTAL_PAGES) isLastPageVar = true
+                if (currentPage > TOTAL_PAGES) {
+                    isLastPageVar = true
+                    adapter.removeLoading()
+                }
             }, {
                 it.printStackTrace()
             })
@@ -83,7 +86,10 @@ class MainActivity : AppCompatActivity() {
             .subscribe({ result ->
                 isLoadingVar = false
                 adapter.addAll(result.data.list)
-                if (currentPage == TOTAL_PAGES) isLastPageVar = true
+                if (currentPage == TOTAL_PAGES) {
+                    isLastPageVar = true
+                    adapter.removeLoading()
+                }
             }, {
                 it.printStackTrace()
             })

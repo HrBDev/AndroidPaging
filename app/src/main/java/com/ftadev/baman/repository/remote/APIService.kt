@@ -16,7 +16,7 @@ interface APIService {
     fun getSampleList(@Body page: Page): Single<SampleList>
 
     @GET("challenge/getbyid")
-    fun getSampleItem(@Query("page") id: String): Single<SampleItem>
+    fun getSampleItem(@Query("id") id: String): Single<SampleItem>
 
     companion object {
         val instance: APIService by lazy {

@@ -1,5 +1,6 @@
 package com.ftadev.baman.ui.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.ftadev.baman.databinding.ItemListBinding
 import com.ftadev.baman.databinding.ItemProgressBinding
 import com.ftadev.baman.repository.model.Item
+import com.ftadev.baman.ui.activities.DetailActivity
 
 class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM = 0
@@ -51,9 +53,17 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 listVH.mDate.text = item.createDate.toString()
                 listVH.mDesc.text = item.description
 
-                Glide.with(holder.itemView)
+                val view = holder.itemView
+
+                Glide.with(view)
                     .load(item.imageUrl)
                     .into(listVH.mPhoto)
+
+                view.setOnClickListener {
+                    val intent = Intent(view.context, DetailActivity::class.java)
+                    intent.putExtra("id", item.id)
+                    view.context.startActivity(intent)
+                }
             }
             LOADING -> {
                 val loadingVH = holder as LoadingViewHolder

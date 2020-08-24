@@ -6,17 +6,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ftadev.baman.R
+import com.ftadev.baman.databinding.ActivityMainBinding
 import com.ftadev.baman.repository.model.Page
 import com.ftadev.baman.repository.remote.APIService
 import com.ftadev.baman.ui.PaginationScrollListener
 import com.ftadev.baman.ui.adapter.PaginationAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val mApiService by lazy { APIService.instance }
+    private lateinit var binding: ActivityMainBinding
 
     lateinit var adapter: PaginationAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupRecyclerView()
 
@@ -41,12 +42,12 @@ class MainActivity : AppCompatActivity() {
         adapter = PaginationAdapter()
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rv.layoutManager = linearLayoutManager
-        rv.itemAnimator = DefaultItemAnimator()
+        binding.rv.layoutManager = linearLayoutManager
+        binding.rv.itemAnimator = DefaultItemAnimator()
 
-        rv.adapter = adapter
+        binding.rv.adapter = adapter
 
-        rv.addOnScrollListener(object : PaginationScrollListener(linearLayoutManager) {
+        binding.rv.addOnScrollListener(object : PaginationScrollListener(linearLayoutManager) {
             override fun loadMoreItems() {
                 isLoadingVar = true
                 currentPage += 1
@@ -61,13 +62,13 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun loadFirstPage() {
-        progress.visibility = View.VISIBLE
+        binding.progress.visibility = View.VISIBLE
         currentPage = PAGE_START
         mApiService.getSampleList(Page(page = currentPage.toString()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                progress.visibility = View.GONE
+                binding.progress.visibility = View.GONE
                 adapter.addAll(result.data.list)
                 if (currentPage > TOTAL_PAGES) {
                     isLastPageVar = true

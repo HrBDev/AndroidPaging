@@ -4,19 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.ftadev.baman.R
+import com.ftadev.baman.databinding.ActivityDetailBinding
 import com.ftadev.baman.repository.remote.APIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
     private val mApiService by lazy { APIService.instance }
-
+    private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         intent.getStringExtra("id")?.run {
             loadData(this)
@@ -30,11 +30,11 @@ class DetailActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                detail_name.text = result.data.name
-                detail_date.text = result.data.createDate.toString()
-                detail_desc.text = result.data.description
-                detail_url.text = result.data.shareUrl
-                Glide.with(this).load(result.data.imageUrl).into(detail_photo)
+                binding.detailName.text = result.data.name
+                binding.detailDate.text = result.data.createDate.toString()
+                binding.detailDesc.text = result.data.description
+                binding.detailUrl.text = result.data.shareUrl
+                Glide.with(this).load(result.data.imageUrl).into(binding.detailPhoto)
             }, {
                 it.printStackTrace()
             })

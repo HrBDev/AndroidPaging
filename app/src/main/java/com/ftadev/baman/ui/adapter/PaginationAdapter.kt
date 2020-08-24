@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ftadev.baman.convertLongToTime
 import com.ftadev.baman.databinding.ItemListBinding
 import com.ftadev.baman.databinding.ItemProgressBinding
 import com.ftadev.baman.repository.model.Item
@@ -50,7 +51,7 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             ITEM -> {
                 val listVH: ListViewHolder = holder as ListViewHolder
                 listVH.mName.text = item.name
-                listVH.mDate.text = item.createDate.toString()
+                listVH.mDate.text = convertLongToTime(item.createDate)
                 listVH.mDesc.text = item.description
 
                 val view = holder.itemView

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.ftadev.baman.convertLongToTime
 import com.ftadev.baman.databinding.ActivityDetailBinding
 import com.ftadev.baman.repository.remote.APIService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 binding.detailName.text = result.data.name
-                binding.detailDate.text = result.data.createDate.toString()
+                binding.detailDate.text = convertLongToTime(result.data.createDate)
                 binding.detailDesc.text = result.data.description
                 binding.detailUrl.text = result.data.shareUrl
                 Glide.with(this).load(result.data.imageUrl).into(binding.detailPhoto)

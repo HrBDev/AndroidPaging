@@ -3,12 +3,10 @@ package com.ftadev.baman.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ftadev.baman.R
+import com.ftadev.baman.databinding.ItemListBinding
+import com.ftadev.baman.databinding.ItemProgressBinding
 import com.ftadev.baman.repository.model.Item
 
 class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -20,16 +18,23 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         lateinit var viewHolder: RecyclerView.ViewHolder
-        val inflater = LayoutInflater.from(parent.context)
 
         when (viewType) {
             ITEM -> {
-                val viewItem = inflater.inflate(R.layout.item_list, parent, false)
-                viewHolder = ListViewHolder(viewItem)
+                val binding = ItemListBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                viewHolder = ListViewHolder(binding)
             }
             LOADING -> {
-                val viewLoading = inflater.inflate(R.layout.item_progress, parent, false)
-                viewHolder = LoadingViewHolder(viewLoading)
+                val binding = ItemProgressBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                viewHolder = LoadingViewHolder(binding)
             }
         }
 
@@ -57,24 +62,25 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    class ListViewHolder(binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
-        var mName: TextView = itemView.findViewById(R.id.name)
-        var mDesc: TextView = itemView.findViewById(R.id.desc)
-        var mDate: TextView = itemView.findViewById(R.id.date)
-        var mPhoto: ImageView = itemView.findViewById(R.id.photo)
+        var mName = binding.name
+        var mDesc = binding.desc
+        var mDate = binding.date
+        var mPhoto = binding.photo
 
         override fun onClick(p0: View?) {
         }
     }
 
-    class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val mProgressBar: ProgressBar = itemView.findViewById(R.id.loadmore_progress)
+    class LoadingViewHolder(binding: ItemProgressBinding) : RecyclerView.ViewHolder(binding.root) {
+        val mProgressBar = binding.loadmoreProgress
     }
 
     override fun getItemCount() = mList.size
 
-    override fun getItemViewType(position: Int): Int = if (position == mList.size - 1 && isLoading) LOADING else ITEM
+    override fun getItemViewType(position: Int): Int =
+        if (position == mList.size - 1 && isLoading) LOADING else ITEM
 
     fun addLoading() {
         isLoading = true

@@ -18,6 +18,7 @@ buildscript {
     ext.okhttp_version = '4.8.1'
     ext.glide_version = '4.11.0'
     ext.cardview_version = '1.0.0'
+    ext.lifecycle_version = '2.2.0'
 
     repositories {
         google()

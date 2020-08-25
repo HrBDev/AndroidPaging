@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class DetailActivity : AppCompatActivity() {
-    private val mApiService by lazy { APIService.instance }
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +26,17 @@ class DetailActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     fun loadData(id: String) {
-        mApiService.getSampleItem(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
-                binding.detailName.text = result.data.name
-                binding.detailDate.text = convertLongToTime(result.data.createDate)
-                binding.detailDesc.text = result.data.description
-                binding.detailUrl.text = result.data.shareUrl
-                Glide.with(this).load(result.data.imageUrl).into(binding.detailPhoto)
-            }, {
-                it.printStackTrace()
-            })
+//        mApiService.getSampleItem(id)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({ result ->
+//                binding.detailName.text = result.data.name
+//                binding.detailDate.text = convertLongToTime(result.data.createDate)
+//                binding.detailDesc.text = result.data.description
+//                binding.detailUrl.text = result.data.shareUrl
+//                Glide.with(this).load(result.data.imageUrl).into(binding.detailPhoto)
+//            }, {
+//                it.printStackTrace()
+//            })
     }
 }

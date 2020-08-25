@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ftadev.baman.databinding.ActivityMainBinding
@@ -11,12 +12,10 @@ import com.ftadev.baman.repository.model.Page
 import com.ftadev.baman.repository.remote.APIService
 import com.ftadev.baman.ui.PaginationScrollListener
 import com.ftadev.baman.ui.adapter.PaginationAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
-    private val mApiService by lazy { APIService.instance }
     private lateinit var binding: ActivityMainBinding
+    private val apiService by lazy { APIService.instance }
 
     lateinit var adapter: PaginationAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -64,36 +63,31 @@ class MainActivity : AppCompatActivity() {
     private fun loadFirstPage() {
         binding.progress.visibility = View.VISIBLE
         currentPage = PAGE_START
-        mApiService.getSampleList(Page(page = currentPage.toString()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
+        apiService.getSampleList(Page(page = currentPage.toString()))
+            .observe(this, Observer { result ->
                 binding.progress.visibility = View.GONE
-                adapter.addAll(result.data.list)
-                if (currentPage > TOTAL_PAGES) {
-                    isLastPageVar = true
-                    adapter.removeLoading()
+                result.body?.data?.list?.run {
+                    adapter.addAll(this)
+                    if (currentPage > TOTAL_PAGES) {
+                        isLastPageVar = true
+                        adapter.removeLoading()
+                    }
                 }
-            }, {
-                it.printStackTrace()
             })
     }
 
     @SuppressLint("CheckResult")
     private fun loadNextPage() {
-        mApiService.getSampleList(Page(page = currentPage.toString()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
+        apiService.getSampleList(Page(page = currentPage.toString()))
+            .observe(this, Observer { result ->
                 isLoadingVar = false
-                adapter.addAll(result.data.list)
-                if (currentPage == TOTAL_PAGES) {
-                    isLastPageVar = true
-                    adapter.removeLoading()
+                result.body?.data?.list?.run {
+                    adapter.addAll(this)
+                    if (currentPage == TOTAL_PAGES) {
+                        isLastPageVar = true
+                        adapter.removeLoading()
+                    }
                 }
-            }, {
-                it.printStackTrace()
             })
     }
-
 }

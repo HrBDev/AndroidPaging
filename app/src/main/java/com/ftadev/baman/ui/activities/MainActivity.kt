@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ftadev.baman.databinding.ActivityMainBinding
-import com.ftadev.baman.repository.model.Page
-import com.ftadev.baman.repository.remote.APIService
 import com.ftadev.baman.ui.PaginationScrollListener
 import com.ftadev.baman.ui.adapter.PaginationAdapter
+import com.ftadev.baman.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val apiService by lazy { APIService.instance }
+    private lateinit var viewModel: MainViewModel
 
     lateinit var adapter: PaginationAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setupRecyclerView()
 
@@ -63,31 +65,25 @@ class MainActivity : AppCompatActivity() {
     private fun loadFirstPage() {
         binding.progress.visibility = View.VISIBLE
         currentPage = PAGE_START
-        apiService.getSampleList(Page(page = currentPage.toString()))
-            .observe(this, Observer { result ->
-                binding.progress.visibility = View.GONE
-                result.body?.data?.list?.run {
-                    adapter.addAll(this)
-                    if (currentPage > TOTAL_PAGES) {
-                        isLastPageVar = true
-                        adapter.removeLoading()
-                    }
-                }
-            })
+        viewModel.getList(page = currentPage.toString()).observe(this, Observer { result ->
+            binding.progress.visibility = View.GONE
+            adapter.addAll(result.data.list)
+            if (currentPage > TOTAL_PAGES) {
+                isLastPageVar = true
+                adapter.removeLoading()
+            }
+        })
     }
 
     @SuppressLint("CheckResult")
     private fun loadNextPage() {
-        apiService.getSampleList(Page(page = currentPage.toString()))
-            .observe(this, Observer { result ->
-                isLoadingVar = false
-                result.body?.data?.list?.run {
-                    adapter.addAll(this)
-                    if (currentPage == TOTAL_PAGES) {
-                        isLastPageVar = true
-                        adapter.removeLoading()
-                    }
-                }
-            })
+        viewModel.getList(page = currentPage.toString()).observe(this, Observer { result ->
+            isLoadingVar = false
+            adapter.addAll(result.data.list)
+            if (currentPage == TOTAL_PAGES) {
+                isLastPageVar = true
+                adapter.removeLoading()
+            }
+        })
     }
 }

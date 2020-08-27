@@ -1,22 +1,21 @@
-package com.ftadev.baman.ui.adapter
+package com.ftadev.androidpaging.ui.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ftadev.baman.convertLongToTime
-import com.ftadev.baman.databinding.ItemListBinding
-import com.ftadev.baman.databinding.ItemProgressBinding
-import com.ftadev.baman.repository.model.Item
-import com.ftadev.baman.ui.activities.DetailActivity
+import com.ftadev.androidpaging.databinding.ItemListBinding
+import com.ftadev.androidpaging.databinding.ItemProgressBinding
+import com.ftadev.androidpaging.decreaseSize
+import com.ftadev.androidpaging.repository.model.PhotoItem
+import com.ftadev.androidpaging.repository.model.PhotoList
 
 class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM = 0
     private val LOADING = 1
 
-    private var mList = ArrayList<Item>()
+    private var mList = PhotoList()
     private var isLoading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -50,20 +49,18 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (getItemViewType(position)) {
             ITEM -> {
                 val listVH: ListViewHolder = holder as ListViewHolder
-                listVH.mName.text = item.name
-                listVH.mDate.text = convertLongToTime(item.createDate)
-                listVH.mDesc.text = item.description
+                listVH.mName.text = item.author
 
                 val view = holder.itemView
 
                 Glide.with(view)
-                    .load(item.imageUrl)
+                    .load(decreaseSize(item.download_url))
                     .into(listVH.mPhoto)
 
                 view.setOnClickListener {
-                    val intent = Intent(view.context, DetailActivity::class.java)
-                    intent.putExtra("id", item.id)
-                    view.context.startActivity(intent)
+//                    val intent = Intent(view.context, DetailActivity::class.java)
+//                    intent.putExtra("id", item.id)
+//                    view.context.startActivity(intent)
                 }
             }
             LOADING -> {
@@ -76,9 +73,7 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ListViewHolder(binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
         var mName = binding.name
-        var mDesc = binding.desc
-        var mDate = binding.date
-        var mPhoto = binding.photo
+        var mPhoto = binding.image
 
         override fun onClick(p0: View?) {
         }
@@ -101,23 +96,23 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         isLoading = false
     }
 
-    fun addAll(items: ArrayList<Item>) {
+    fun addAll(items: PhotoList) {
         mList.addAll(items)
         notifyDataSetChanged()
     }
 
-    fun insert(position: Int, item: Item) {
+    fun insert(position: Int, item: PhotoItem) {
         mList.add(position, item)
         notifyItemInserted(position)
     }
 
-    fun remove(item: Item) {
+    fun remove(item: PhotoItem) {
         val position = mList.indexOf(item)
         mList.removeAt(position)
         notifyItemRemoved(position)
     }
 
-    fun updateItems(items: ArrayList<Item>) {
+    fun updateItems(items: PhotoList) {
         mList = items
         notifyDataSetChanged()
     }

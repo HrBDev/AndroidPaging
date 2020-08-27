@@ -1,29 +1,28 @@
-package com.ftadev.baman.ui.viewmodel
+package com.ftadev.androidpaging.ui.viewmodel
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ftadev.baman.repository.model.Page
-import com.ftadev.baman.repository.model.SampleList
-import com.ftadev.baman.repository.remote.APIService
+import com.ftadev.androidpaging.repository.model.PhotoList
+import com.ftadev.androidpaging.repository.remote.APIService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel : ViewModel() {
     private val apiService by lazy { APIService.instance }
 
-    var sampleListData: MutableLiveData<SampleList> = MutableLiveData()
+    var photoListData: MutableLiveData<PhotoList> = MutableLiveData()
 
     @SuppressLint("CheckResult")
-    fun getList(page: String): MutableLiveData<SampleList> {
-        apiService.getSampleList(Page(page = page))
+    fun getList(page: Int): MutableLiveData<PhotoList> {
+        apiService.getPhotoList(page = page, limit = 10)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
-                sampleListData.value = result
+                photoListData.value = result
             }, {
                 it.printStackTrace()
             })
-        return sampleListData
+        return photoListData
     }
 }

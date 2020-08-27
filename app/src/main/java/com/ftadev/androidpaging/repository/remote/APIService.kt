@@ -1,26 +1,20 @@
-package com.ftadev.baman.repository.remote
+package com.ftadev.androidpaging.repository.remote
 
-import com.ftadev.baman.BASE_URL
-import com.ftadev.baman.repository.model.Page
-import com.ftadev.baman.repository.model.SampleItem
-import com.ftadev.baman.repository.model.SampleList
+import com.ftadev.androidpaging.BASE_URL
+import com.ftadev.androidpaging.repository.model.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface APIService {
 
-    @POST("challenge/list")
-    fun getSampleList(@Body page: Page): Single<SampleList>
-
-    @GET("challenge/getbyid")
-    fun getSampleItem(@Query("id") id: String): Single<SampleItem>
+    @GET("list")
+    fun getPhotoList(@Query("page") page: Int,
+                     @Query("limit") limit: Int): Single<PhotoList>
 
     companion object {
         val instance: APIService by lazy {

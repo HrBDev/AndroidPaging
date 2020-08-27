@@ -1,7 +1,3 @@
 <resources>
-    <string name="app_name">Baman</string>
-    <string name="name">نام</string>
-    <string name="desc">توضیحات</string>
-    <string name="date">تاریخ</string>
-    <string name="link">لینک</string>
+    <string name="app_name">AndroidPaging</string>
 </resources>

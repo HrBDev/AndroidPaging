@@ -1,4 +1,4 @@
-package com.ftadev.baman
+package com.ftadev.androidpaging
 
 import org.junit.Test
 

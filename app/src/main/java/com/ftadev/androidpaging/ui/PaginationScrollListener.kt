@@ -1,4 +1,4 @@
-package com.ftadev.baman.ui
+package com.ftadev.androidpaging.ui
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

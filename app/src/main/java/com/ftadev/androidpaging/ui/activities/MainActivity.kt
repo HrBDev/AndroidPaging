@@ -1,4 +1,4 @@
-package com.ftadev.baman.ui.activities
+package com.ftadev.androidpaging.ui.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,10 +8,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ftadev.baman.databinding.ActivityMainBinding
-import com.ftadev.baman.ui.PaginationScrollListener
-import com.ftadev.baman.ui.adapter.PaginationAdapter
-import com.ftadev.baman.ui.viewmodel.MainViewModel
+import com.ftadev.androidpaging.databinding.ActivityMainBinding
+import com.ftadev.androidpaging.ui.PaginationScrollListener
+import com.ftadev.androidpaging.ui.adapter.PaginationAdapter
+import com.ftadev.androidpaging.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -65,9 +65,9 @@ class MainActivity : AppCompatActivity() {
     private fun loadFirstPage() {
         binding.progress.visibility = View.VISIBLE
         currentPage = PAGE_START
-        viewModel.getList(page = currentPage.toString()).observe(this, Observer { result ->
+        viewModel.getList(page = currentPage).observe(this, Observer { result ->
             binding.progress.visibility = View.GONE
-            adapter.addAll(result.data.list)
+            adapter.addAll(result)
             if (currentPage > TOTAL_PAGES) {
                 isLastPageVar = true
                 adapter.removeLoading()
@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun loadNextPage() {
-        viewModel.getList(page = currentPage.toString()).observe(this, Observer { result ->
+        viewModel.getList(page = currentPage).observe(this, Observer { result ->
             isLoadingVar = false
-            adapter.addAll(result.data.list)
+            adapter.addAll(result)
             if (currentPage == TOTAL_PAGES) {
                 isLastPageVar = true
                 adapter.removeLoading()

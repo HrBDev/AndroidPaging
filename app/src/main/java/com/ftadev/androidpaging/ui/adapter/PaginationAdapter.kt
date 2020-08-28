@@ -88,11 +88,11 @@ class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int =
         if (position == mList.size - 1 && isLoading) LOADING else ITEM
 
-    fun addLoading() {
+    fun enableLoading() {
         isLoading = true
     }
 
-    fun removeLoading() {
+    fun disableLoading() {
         isLoading = false
     }
 

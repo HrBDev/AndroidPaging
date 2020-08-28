@@ -9,20 +9,31 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel : ViewModel() {
+    var currentPage = 1
+    var isLoading = false
+    var isLastPage = false
+
     private val apiService by lazy { APIService.instance }
 
-    var photoListData: MutableLiveData<PhotoList> = MutableLiveData()
+    val photos by lazy {
+        // initial loading request
+        MutableLiveData<PhotoList>().also {
+            loadPics()
+        }
+    }
 
     @SuppressLint("CheckResult")
-    fun getList(page: Int): MutableLiveData<PhotoList> {
-        apiService.getPhotoList(page = page, limit = 10)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
-                photoListData.value = result
-            }, {
-                it.printStackTrace()
-            })
-        return photoListData
+    fun loadPics() {
+        isLoading = true
+        if (currentPage <= 6) {
+            apiService.getPhotoList(page = currentPage, limit = 10)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    photos.value = result
+                }, {
+                    it.printStackTrace()
+                })
+        }
     }
 }

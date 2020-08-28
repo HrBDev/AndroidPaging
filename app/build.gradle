@@ -46,6 +46,8 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "com.google.android.material:material:$android_material_version"
     implementation "androidx.cardview:cardview:$cardview_version"
+    implementation "androidx.drawerlayout:drawerlayout:1.1.0" // Don't know why we need this!
+    implementation "androidx.transition:transition-ktx:1.4.0-beta01" // Don't know why we need this!
 
     // NETWORK
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

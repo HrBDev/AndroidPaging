@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -59,6 +60,7 @@ dependencies {
 
     // Image Loading
     implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // LiveData & VIewModel
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"

@@ -11,11 +11,10 @@ import com.ftadev.androidpaging.decreaseSize
 import com.ftadev.androidpaging.repository.model.PhotoItem
 import com.ftadev.androidpaging.repository.model.PhotoList
 
-class PaginationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PaginationAdapter(private var mList: PhotoList) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val ITEM = 0
     private val LOADING = 1
 
-    private var mList = PhotoList()
     private var isLoading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

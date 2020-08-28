@@ -12,6 +12,7 @@ class MainViewModel : ViewModel() {
     var currentPage = 1
     var isLoading = false
     var isLastPage = false
+    var recyclerList = PhotoList()
 
     private val apiService by lazy { APIService.instance }
 

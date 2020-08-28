@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PaginationAdapter()
+        adapter = PaginationAdapter(viewModel.recyclerList)
 
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rv.layoutManager = linearLayoutManager
